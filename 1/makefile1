@@ -1,0 +1,13 @@
+CXX = g++
+CC = gcc
+1: 1.o a.o b.o
+	$(CXX) -o 1 1.o a.o b.o
+1.o: 1.cpp a.h b.h
+	$(CXX) -c 1.cpp
+a.o: a.cpp a.h
+	$(CXX) -c a.cpp
+b.o: b.cpp b.h
+	$(CXX) -c b.cpp
+clean:
+	rm -rf *.o
+	rm 1

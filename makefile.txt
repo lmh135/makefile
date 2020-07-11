@@ -1,0 +1,69 @@
+https://www.jianshu.com/p/ff0e0e26c47a
+
+target … : prerequisites …
+	command
+目标：依赖
+	执行指令 …
+
+CXX = g++
+CC = gcc
+1: 1.o a.o b.o
+	$(CXX) -o 1 1.o a.o b.o
+1.o: 1.cpp a.h b.h
+	$(CXX) -c 1.cpp
+a.o: a.cpp a.h
+	$(CXX) -c a.cpp
+b.o: b.cpp b.h
+	$(CXX) -c b.cpp
+clean:
+	rm -rf *.o
+	rm 1
+
+make
+./1.cpp
+
+1、如果不用makefile，可直接用命令：
+g++ -o 1 1.cpp a.cpp b.cpp
+./1.cpp
+缺点：需要每次重新输入指令;当修改一个文件时就要全部重新编译;
+
+2、最简易的makefile:
+1: 1.cpp a.cpp b.cpp
+	g++ -o 1 1.cpp a.cpp b.cpp
+缺点：当修改一个文件时就要全部重新编译;且如果修改.h文件make无法察觉;
+
+3、
+cc = g++
+prom = 1
+deps = a.h b.h
+obj = 1.o a.o b.o
+$(prom): $(obj)
+	$(cc) -o $(prom) $(obj)
+1.o: 1.cpp a.h b.h
+	$(CXX) -c 1.cpp
+a.o: a.cpp a.h
+	$(CXX) -c a.cpp
+b.o: b.cpp b.h
+	$(CXX) -c b.cpp
+#上边连续6行可以由下替代
+#################
+#%.o: %.c $(deps)
+#	$(cc) -c $< -o $@
+#################
+clean:
+	rm -rf $(obj) $(prom)
+
+
+
+Makefile 或 makefile;
+在标准的编译过程中，源文件往往是先被编译成目标文件，然后再由目标文件连接成可执行文件的。
+-c表示只编译，不链接，属于编译过程的中间阶段，再经过链接才生成最后的可执行文件；
+在Makefile文件中，命令必须以【tab】键开始;
+
+
+
+
+
+
+
+
